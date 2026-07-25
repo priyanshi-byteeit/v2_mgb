@@ -1,29 +1,138 @@
 connection: "mgb_motors"
 
-# include all the views
-include: "/views/**/*.view.lkml"
+include: "/views/*.view"
+include: "/models/*.dashboard.lookml"
 
-datagroup: v2_mgb_motors_dashboard_default_datagroup {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
+# ==========================================================
+# CONSOLIDATED explore -- powers the main "all 3 businesses" dashboard
+# ==========================================================
+explore: demo_unified_revenue {
+  label: "Consolidated Revenue - All Businesses"
+
+  join: demo_dim_business {
+    type: left_outer
+    sql_on: ${demo_unified_revenue.business_id} = ${demo_dim_business.business_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_branch {
+    type: left_outer
+    sql_on: ${demo_unified_revenue.branch} = ${demo_dim_branch.branch_name}
+      and ${demo_unified_revenue.business_id} = ${demo_dim_branch.business_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_date {
+    type: left_outer
+    sql_on: ${demo_unified_revenue.date_raw} = ${demo_dim_date.date_raw} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_vehicle_type {
+    type: left_outer
+    sql_on: ${demo_unified_revenue.vehicle_type_id} = ${demo_dim_vehicle_type.vehicle_type_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_part_category {
+    type: left_outer
+    sql_on: ${demo_unified_revenue.part_category_id} = ${demo_dim_part_category.part_category_id} ;;
+    relationship: many_to_one
+  }
 }
 
-persist_with: v2_mgb_motors_dashboard_default_datagroup
+# ==========================================================
+# Vehicle Sales explore -- powers the vehicle-type / two-wheeler filter
+# ==========================================================
+explore: demo_fact_vehicle_sales {
+  label: "Vehicle Sales - JCB / Tata / Eicher"
 
-explore: demo_fact_service_revenue {}
+  join: demo_dim_business {
+    type: left_outer
+    sql_on: ${demo_fact_vehicle_sales.business_id} = ${demo_dim_business.business_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_fact_parts_sales {}
+  join: demo_dim_vehicle_type {
+    type: left_outer
+    sql_on: ${demo_fact_vehicle_sales.vehicle_type_id} = ${demo_dim_vehicle_type.vehicle_type_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_fact_vehicle_sales {}
+  join: demo_dim_branch {
+    type: left_outer
+    sql_on: ${demo_fact_vehicle_sales.branch} = ${demo_dim_branch.branch_name}
+      and ${demo_fact_vehicle_sales.business_id} = ${demo_dim_branch.business_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_dim_date {}
+  join: demo_dim_date {
+    type: left_outer
+    sql_on: date(${demo_fact_vehicle_sales.invoice_raw}) = date(${demo_dim_date.date_raw}) ;;
+    relationship: many_to_one
+  }
+}
 
-explore: demo_dim_business {}
+# ==========================================================
+# Parts Sales explore -- powers the parts-category filter
+# ==========================================================
+explore: demo_fact_parts_sales {
+  label: "Parts Sales - JCB / Tata / Eicher"
 
-explore: demo_dim_part_category {}
+  join: demo_dim_business {
+    type: left_outer
+    sql_on: ${demo_fact_parts_sales.business_id} = ${demo_dim_business.business_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_dim_vehicle_type {}
+  join: demo_dim_part_category {
+    type: left_outer
+    sql_on: ${demo_fact_parts_sales.part_category_id} = ${demo_dim_part_category.part_category_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_dim_branch {}
+  join: demo_dim_branch {
+    type: left_outer
+    sql_on: ${demo_fact_parts_sales.branch} = ${demo_dim_branch.branch_name}
+      and ${demo_fact_parts_sales.business_id} = ${demo_dim_branch.business_id} ;;
+    relationship: many_to_one
+  }
 
-explore: demo_unified_revenue {}
+  join: demo_dim_date {
+    type: left_outer
+    sql_on: date(${demo_fact_parts_sales.invoice_raw}) = date(${demo_dim_date.date_raw}) ;;
+    relationship: many_to_one
+  }
+}
+
+# ==========================================================
+# Service Revenue explore
+# ==========================================================
+explore: demo_fact_service_revenue {
+  label: "Service Revenue - JCB / Tata / Eicher"
+
+  join: demo_dim_business {
+    type: left_outer
+    sql_on: ${demo_fact_service_revenue.business_id} = ${demo_dim_business.business_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_vehicle_type {
+    type: left_outer
+    sql_on: ${demo_fact_service_revenue.vehicle_type_id} = ${demo_dim_vehicle_type.vehicle_type_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_branch {
+    type: left_outer
+    sql_on: ${demo_fact_service_revenue.branch} = ${demo_dim_branch.branch_name}
+      and ${demo_fact_service_revenue.business_id} = ${demo_dim_branch.business_id} ;;
+    relationship: many_to_one
+  }
+
+  join: demo_dim_date {
+    type: left_outer
+    sql_on: date(${demo_fact_service_revenue.doc_raw}) = date(${demo_dim_date.date_raw}) ;;
+    relationship: many_to_one
+  }
+}

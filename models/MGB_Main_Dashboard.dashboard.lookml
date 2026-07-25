@@ -43,6 +43,32 @@
     explore: demo_unified_revenue
     field: demo_unified_revenue.revenue_stream
 
+  - name: Vehicle Type
+    title: Vehicle Type
+    type: field_filter
+    default_value: ""
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+    model: v2_mgb_motors_dashboard
+    explore: demo_unified_revenue
+    field: demo_dim_vehicle_type.category
+
+  - name: Part Category
+    title: Part Category
+    type: field_filter
+    default_value: ""
+    allow_multiple_values: true
+    required: false
+    ui_config:
+      type: tag_list
+      display: popover
+    model: v2_mgb_motors_dashboard
+    explore: demo_unified_revenue
+    field: demo_dim_part_category.category_name
+
   - name: Date Range
     title: Date Range
     type: field_filter
@@ -53,7 +79,7 @@
       display: inline
     model: v2_mgb_motors_dashboard
     explore: demo_unified_revenue
-    field: demo_dim_date.date
+    field: demo_dim_date.date_date
 
   elements:
 
@@ -68,7 +94,9 @@
       Business: demo_dim_business.business_name
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 0
     col: 0
     width: 6
@@ -84,7 +112,9 @@
       Business: demo_dim_business.business_name
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 0
     col: 6
     width: 6
@@ -100,7 +130,9 @@
     listen:
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 0
     col: 12
     width: 12
@@ -119,7 +151,9 @@
       Business: demo_dim_business.business_name
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 4
     col: 0
     width: 24
@@ -135,7 +169,9 @@
     listen:
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 12
     col: 0
     width: 8
@@ -150,7 +186,9 @@
     listen:
       Business: demo_dim_business.business_name
       Branch: demo_dim_branch.branch_name
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 12
     col: 8
     width: 8
@@ -167,7 +205,9 @@
     listen:
       Business: demo_dim_business.business_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 12
     col: 16
     width: 8
@@ -183,7 +223,9 @@
     listen:
       Business: demo_dim_business.business_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 20
     col: 0
     width: 12
@@ -201,7 +243,9 @@
       Business: demo_dim_business.business_name
       Branch: demo_dim_branch.branch_name
       Revenue Stream: demo_unified_revenue.revenue_stream
-      Date Range: demo_dim_date.date
+      Vehicle Type: demo_dim_vehicle_type.category
+      Part Category: demo_dim_part_category.category_name
+      Date Range: demo_dim_date.date_date
     row: 20
     col: 12
     width: 12

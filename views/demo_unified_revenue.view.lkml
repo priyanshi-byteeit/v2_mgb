@@ -28,6 +28,15 @@ view: demo_unified_revenue {
     type: string
     sql: ${TABLE}.revenue_stream ;;
   }
+  dimension: vehicle_type_id {
+    type: number
+    sql: ${TABLE}.vehicle_type_id ;;
+  }
+
+  dimension: part_category_id {
+    type: number
+    sql: ${TABLE}.part_category_id ;;
+  }
   measure: count {
     type: count
   }
