@@ -25,6 +25,12 @@ view: demo_dim_branch {
     type: string
     sql: ${TABLE}.state ;;
   }
+  dimension: location {
+    type: location
+    sql_latitude: ${TABLE}.latitude ;;
+    sql_longitude: ${TABLE}.longitude ;;
+    hidden: yes
+  }
   measure: count {
     type: count
     drill_fields: [branch_name]

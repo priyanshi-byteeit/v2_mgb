@@ -72,4 +72,28 @@ view: demo_fact_parts_sales {
     type: count
     drill_fields: [part_name]
   }
+  measure: total_sales_amount {
+    type: sum
+    sql: ${invoice_total} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_discount_amount {
+    type: sum
+    sql: ${discount_amt} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_returns {
+    type: sum
+    sql: ${return_total} ;;
+  }
+
+
+
+  measure: return_rate {
+    type: number
+    sql: 100.0 * ${total_returns} / NULLIF(${total_sales_amount}, 0) ;;
+    value_format: "0.0\"%\""
+  }
 }

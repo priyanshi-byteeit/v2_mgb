@@ -75,4 +75,27 @@ view: demo_fact_service_revenue {
   measure: count {
     type: count
   }
+  measure: total_sale_amount {
+    type: sum
+    sql: ${sale_amt} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: average_sale_amount {
+    type: average
+    sql: ${sale_amt} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_service_calls {
+    type: count_distinct
+    sql: ${call_id} ;;
+  }
+
+
+
+  measure: total_quantity {
+    type: sum
+    sql: ${qty} ;;
+  }
 }

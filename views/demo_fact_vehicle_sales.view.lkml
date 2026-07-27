@@ -67,4 +67,34 @@ view: demo_fact_vehicle_sales {
   measure: count {
     type: count
   }
+  measure: total_invoice_amount {
+    type: sum
+    sql: ${invoice_total} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_basic_price {
+    type: sum
+    sql: ${basic_price} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_tax_amount {
+    type: sum
+    sql: ${tax_amt} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: average_price_per_machine {
+    type: average
+    sql: ${basic_price} ;;
+    value_format: "\"₹\"#,##0"
+  }
+
+  measure: total_quantity_sold {
+    type: sum
+    sql: ${qty} ;;
+  }
+
+
 }
