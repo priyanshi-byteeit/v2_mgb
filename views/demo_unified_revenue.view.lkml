@@ -43,9 +43,8 @@ view: demo_unified_revenue {
   measure: total_revenue {
     type: sum
     sql: ${amount} ;;
-    value_format_name: decimal_0
+    value_format: "\"₹\"#,##0"
   }
-
   measure: transaction_count {
     type: count
   }
